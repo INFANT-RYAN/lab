@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club Enrollment Form</title>
+<style>
+  .error { color: red; }
+  .enrollmentForm{
+    text-align: center;
+  }
+  body{
+    color: coral;
+  }
+</style>
+</head>
+<body>
+    <center>
+<h2>Club Enrollment Form</h2>
+
+<form id="enrollmentForm" onsubmit="return validateForm()">
+  <label for="fullname">Full Name:</label><br>
+  <input type="text" id="fullname" name="fullname" required><br>
+  <span id="fullnameError" class="error"></span><br><br>
+  <label for="class">Full Name:</label><br>
+  <input type="text" id="class" name="class" placeholder="BSC CS" required><br>
+
+  <label for="email">Email:</label><br>
+  <input type="email" id="email" name="email" required><br>
+  <span id="emailError" class="error"></span><br><br>
+
+  <label for="phone">Phone:</label><br>
+  <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br>
+  <span id="phoneError" class="error"></span><br><br>
+
+  <label for="age">Age:</label><br>
+  <input type="number" id="age" name="age" min="18" max="100" required><br><br>
+
+  <label for="gender">Gender:</label><br>
+  <select id="gender" name="gender" required>
+    <option value="">Select</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select><br><br>
+
+  <label for="interests">Interests:</label><br>
+  <textarea id="interests" name="interests" rows="4" cols="50" required></textarea><br><br>
+
+  <input type="submit" value="Submit">
+</form>
+</center>
+
+<script>
+  function validateForm() {
+    let valid = true;
+    const fullname = document.getElementById('fullname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const interests = document.getElementById('interests').value.trim();
+
+    // Reset errors
+    document.getElementById('fullnameError').textContent = '';
+    document.getElementById('emailError').textContent = '';
+    document.getElementById('phoneError').textContent = '';
+
+    // Validation logic
+    if (fullname === '') {
+      document.getElementById('fullnameError').textContent = 'Full name is required';
+      valid = false;
+    }
+
+    if (email === '') {
+      document.getElementById('emailError').textContent = 'Email is required';
+      valid = false;
+    } else if (!isValidEmail(email)) {
+      document.getElementById('emailError').textContent = 'Invalid email format';
+      valid = false;
+    }
+
+    if (phone === '') {
+      document.getElementById('phoneError').textContent = 'Phone number is required';
+      valid = false;
+    } else if (!isValidPhone(phone)) {
+      document.getElementById('phoneError').textContent = 'Invalid phone number format (must be 10 digits)';
+      valid = false;
+    }
+
+    if (age < 18 || age > 100) {
+      alert('Age must be between 18 and 100');
+      valid = false;
+    }
+
+    if (gender === '') {
+      alert('Please select your gender');
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  function isValidEmail(email) {
+    // Basic email validation regex
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidPhone(phone) {
+    // Basic phone number validation regex (10 digits)
+    return /^\d{10}$/.test(phone);
+  }
+</script>
+
+</body>
+</html>
